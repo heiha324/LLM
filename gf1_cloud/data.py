@@ -107,7 +107,7 @@ class GF1CloudDataset(Dataset):
         if self.normalize:
             img = img / self.max_value
         img_t = torch.from_numpy(img).permute(2, 0, 1)
-        cloud = (mask == 255).astype(np.float32)
+        cloud = np.logical_or(mask == 254, mask == 255).astype(np.float32)
         mask_t = torch.from_numpy(cloud[None, ...])
         if self.return_meta:
             return img_t, mask_t, meta

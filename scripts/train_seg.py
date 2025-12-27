@@ -90,7 +90,6 @@ def main() -> None:
 
     metas = build_index(args.data_root, args.split)
     train_idx, val_idx = split_indices_by_scene(metas, args.val_ratio, args.seed)
-
     train_ds = GF1CloudDataset(args.data_root, args.split, indices=train_idx)
     val_ds = GF1CloudDataset(args.data_root, args.split, indices=val_idx)
 
