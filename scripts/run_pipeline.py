@@ -133,7 +133,7 @@ def main() -> None:
                 if probs2_cpu is not None:
                     second_probs = probs2_cpu[i, 0]
 
-                result, pred_cloud = run_pipeline_from_probs(
+                result, pred_cloud, final_cloud = run_pipeline_from_probs(
                     img,
                     p_cloud,
                     thresholds=thresholds,
@@ -149,6 +149,8 @@ def main() -> None:
 
                 base_mask_path = Path(args.mask_dir) / (meta.rel_path.replace("/", "_") + "_base.npy")
                 _save_mask(base_mask_path, pred_cloud)
+                final_mask_path = Path(args.mask_dir) / (meta.rel_path.replace("/", "_") + "_final.npy")
+                _save_mask(final_mask_path, final_cloud)
 
                 decision = result.get("decision", {})
                 decision_label = decision.get("decision", "")
@@ -180,6 +182,7 @@ def main() -> None:
                         "scene_id": meta.scene_id,
                         "rel_path": meta.rel_path,
                         "mask_base": str(base_mask_path),
+                        "mask_final": str(final_mask_path),
                         "mask_adjusted": adjusted_masks,
                         **result,
                     },

@@ -150,7 +150,7 @@ def main() -> None:
                 metrics_baseline.append(_metrics(mask_cloud_base, gt_cloud))
 
                 # Pipeline with LLM router + patch verifier
-                result, mask_cloud_pipe = run_pipeline_from_probs(
+                result, mask_cloud_pipe, mask_cloud_final = run_pipeline_from_probs(
                     imgs_cpu[i].transpose(1, 2, 0),
                     p_cloud,
                     thresholds=thresholds,
@@ -165,7 +165,7 @@ def main() -> None:
                 )
 
                 # Optionally adjust thresholds on REJECT (same逻辑：当前保持原样，仅统计 base)
-                metrics_pipeline.append(_metrics(mask_cloud_pipe, gt_cloud))
+                metrics_pipeline.append(_metrics(mask_cloud_final, gt_cloud))
 
     summary = {
         "baseline": _aggregate(metrics_baseline),

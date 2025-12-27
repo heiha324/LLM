@@ -107,6 +107,23 @@ def run_pipeline_from_probs(
 
     decision = fuse_decision(features, fusion_cfg, second_check=second_check, patch_stats=patch_stats)
 
+    t_cloud = float(thresholds.get("t_cloud", 0.5))
+    t_final = t_cloud
+    decision_label = decision.get("decision", "")
+    if decision_label in {"REJECT", "REJECT_SAFE"}:
+        delta = 0.05
+        if patch_stats is not None:
+            cloud_like = patch_stats.get("patch_cloud_like_mean", 0.0)
+            confuse_like = patch_stats.get("patch_confusing_surface_mean", 0.0)
+            if cloud_like >= confuse_like + 0.05:
+                t_final = max(0.0, t_cloud - delta)
+            elif confuse_like >= cloud_like + 0.05:
+                t_final = min(1.0, t_cloud + delta)
+        elif route.get("route") == "FAST_REJECT":
+            t_final = max(0.0, t_cloud - delta)
+
+    mask_final = mask_cloud if t_final == t_cloud else p_cloud > t_final
+
     output = {
         "features": features,
         "route": route,
@@ -115,9 +132,10 @@ def run_pipeline_from_probs(
         "patch_results": patch_results,
         "patch_stats": patch_stats,
         "decision": decision,
+        "mask_threshold_final": t_final,
     }
     if return_masks:
-        return output, mask_cloud
+        return output, mask_cloud, mask_final
     return output
 
 
