@@ -1,0 +1,19 @@
+{
+  "policy_id": "global_screening_v1",
+  "fast_accept": {
+    "cloud_frac_full_max": 0.15,
+    "boundary_uncertainty_max": 0.06,
+    "entropy_mean_max": 0.12
+  },
+  "fast_reject": {
+    "cloud_frac_full_min": 0.35
+  },
+  "escalate": {
+    "run_second_check": true,
+    "sample_patches": {
+      "enabled": true,
+      "k": 12,
+      "strategy": "highest_uncertainty_boundary"
+    }
+  }
+}

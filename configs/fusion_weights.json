@@ -1,0 +1,14 @@
+{
+  "policy_id": "fusion_v1",
+  "weights": {
+    "cloud_frac_full": 1.0,
+    "boundary_uncertainty": 0.8,
+    "disagreement": 0.6,
+    "patch_cloud_like_mean": 0.8,
+    "patch_confusing_surface_mean": 0.4
+  },
+  "thresholds": {
+    "accept": 0.3,
+    "reject": 0.6
+  }
+}

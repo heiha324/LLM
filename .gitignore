@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.so
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage*
+htmlcov/
+.ipynb_checkpoints/
+
+# Env
+.venv/
+venv/
+.env
+.conda/
+.envrc
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Outputs & logs
+outputs/
+logs/
+*.log
+
+# Model artifacts
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+*.bin
+
+# Caches
+.cache/
+torch_compile_cache/
+hf_cache/
